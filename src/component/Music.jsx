@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Card from './Card.jsx'
 import { Context } from '../App.jsx'
 
+
 const productsArr = [
     {
     title: 'Colors',

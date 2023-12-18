@@ -5,11 +5,11 @@ import { FaSquareYoutube } from "react-icons/fa6";
 
 function Footer() {
   return (
-    <div className='flex justify-evenly bg-blue-400 font-bold 	text-white text-8xl bg-grey-400'>
-      <div>
+    <div className='flex justify-evenly  bg-blue-400 font-bold text-white text-8xl '>
+      <div className=' m-4'>
         <p>The Generics</p>
       </div>
-      <div className='flex'>
+      <div className='flex m-4'>
         <DiApple />
         <DiGithubAlt />
         <FaSquareYoutube />

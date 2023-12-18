@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { Context } from '../App.jsx'
 
-function Cart({togglecart,setTogglecart}) {
 
+
+function Cart() {
+const context = useContext(Context)
+let cart = context.cart;
  const handletoggle = ()=>{
-    setTogglecart(!togglecart)
+  context.setTogglecart(!context.togglecart)
   }
+  console.log(cart)
 
   return (
     <div className='flex flex-col p-2'>
@@ -17,9 +22,9 @@ function Cart({togglecart,setTogglecart}) {
              <li className='p-4 underline  underline-offset-4'>Price</li>
              <li className='p-4  underline  underline-offset-4'>Quauntity</li>
         </ul>
-        <div className='p-4'>
-            datasncnsjc
-        </div>
+        <ul>
+            {cart.map((product,idx)=> <li className='flex p-2' key={idx}><p className='w-16'>{product.title}</p><p className='px-4'>{product.price}</p><p className='px-4'>{product.quantity}</p></li>)}
+        </ul> 
         <button  className='bg-sky-500 hover:bg-sky-400 rounded-md p-3'>Add to Purchase</button>
     </div>
   )
