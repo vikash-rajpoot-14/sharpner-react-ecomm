@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { Context } from '../App.jsx'
+import { Link, NavLink } from 'react-router-dom'
 
 
 function Header() {
@@ -16,9 +17,9 @@ function Header() {
       <div>
       </div> 
       <div className='flex mx-14 gap-10'>
-        <a href="/" className='p-3 hover:underline   text-lg sm:text-xl'>Home</a>
-        <a href="#store" className='p-3  hover:underline  text-lg sm:text-xl'>Store</a>
-        <a href="/about" className='p-3  hover:underline  text-lg sm:text-xl'>About</a>
+        <NavLink to="/" className='p-3 hover:underline   text-lg sm:text-xl'>Home</NavLink>
+        <NavLink to="/store" className='p-3  hover:underline  text-lg sm:text-xl'>Store</NavLink>
+        <NavLink to="/about" className='p-3  hover:underline  text-lg sm:text-xl'>About</NavLink>
       </div>
       <a onClick={handletoggle} href="#home" className='flex p-3  text-lg sm:text-xl'><p className=' border-2 rounded-md px-1 border-sky-400 '>cart </p><sup className='text-sky-400 p-1'>{totalQuantity}</sup> </a>
     </div>

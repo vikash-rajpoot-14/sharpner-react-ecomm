@@ -1,10 +1,11 @@
 import React, { createContext, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import About from './pages/About'
-import Home from './pages/Home'
 import Header from './component/Header'
 import Footer from './component/Footer'
 import Cart from './component/Cart'
+import Home from './pages/Home'
+import Store from './pages/Store'
 export const Context = createContext({})
 
 function App() {
@@ -19,16 +20,17 @@ function App() {
   localStorage.setItem('cart', JSON.stringify(cart))
 
   return (
+    <BrowserRouter>
     <Context.Provider value={{ cart, togglecart, setTogglecart, setCart }}>
       <div className='flex h-screen'>
         <div className='flex-1 '>
           <Header />
-            <BrowserRouter>
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/about' element={<About />} />
+                <Route path='/store' element={<Store />} />
+
               </Routes>
-            </BrowserRouter>
           <Footer />
         </div>
         <div className={`w-64 fixed right-0 h-full bg-gray-200 p-4 ${togglecart ? "block" : "hidden"}`} >
@@ -36,6 +38,7 @@ function App() {
         </div>
       </div>
   </Context.Provider>
+  </BrowserRouter>
   )
 }
 
