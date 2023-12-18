@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Card from './Card.jsx'
+import { Context } from '../App.jsx'
 
 const productsArr = [
     {
@@ -24,10 +25,11 @@ const productsArr = [
     }
     ]
 
-function Music({togglecart,setTogglecart}) {
+function Music() {
+  const context = useContext(Context)
 
   const handletoggle = ()=>{
-    setTogglecart(!togglecart)
+    context.setTogglecart(!context.togglecart)
   }
 
   return (
