@@ -36,26 +36,44 @@ function Music() {
   const context = useContext(Context)
   const [loading, setLoading] = useState(false)
   const [movies, setMovies] = useState([])
+  const [error, setError] = useState(false)
+  const [retry, setRetry] = useState(true)
 
   const handletoggle = () => {
     context.setTogglecart(!context.togglecart)
   }
-  console.log(movies)
-  useEffect(() => {
-    async function fetchresult() {
-      try {
-        setLoading(true)
-        const res = await fetch('https://swapi.dev/api/films/')
-        const result = await res.json()
-        setMovies(result.results)
-        setLoading(false)
-      } catch (error) {
-        setLoading(true)
-        throw new Error(error)
-      }
+
+  async function fetchresult() {
+    try {
+      setLoading(true)
+      setError(null)
+      const res = await fetch('https://swapi.dev/api/films/')
+      const result = await res.json()
+      setMovies(result.results)
+      setLoading(false)
+    } catch (error) {
+      setLoading(true)
+      setError(error.message)
+      setLoading(false)
+      retryApi()
     }
-    fetchresult()
-  }, [])
+  }
+  const retryApi = () => {
+    setRetry(true)
+    setInterval(() => {
+      fetchresult()
+    }, 10000)
+  }
+
+  useEffect(() => {
+    if (retry) {
+      fetchresult()
+    }
+  }, [retry])
+
+  const cancelRetry = () => {
+    setRetry(false)
+  }
 
   return (
     <div className='w-fit m-auto '>
@@ -67,8 +85,10 @@ function Music() {
           {movies?.map((el, index) => <Card key={index} data={el} />)}
         </ul>
       }
-      <div className='mb-8 flex items-center justify-center'>
+      <div className='mb-8 flex flex-col items-center justify-center'>
         {loading && <Loader />}
+        {!loading && error && "Something went wrong ! ...Retrying"}
+        {retry && loading && <button onClick={cancelRetry} className='bg-sky-500 hover:bg-slate-400 rounded-lg m-4 p-3'>Cancel Retry</button>}
       </div>
       <div className='text-center m-4'>
         <button onClick={handletoggle} className='text-lg p-2 text-center rounded-md bg-slate-300 text-blue-500'>see the cart</button>
