@@ -9,7 +9,7 @@ let cart = context.cart;
  const handletoggle = ()=>{
   context.setTogglecart(!context.togglecart)
   }
-  console.log(cart)
+  // console.log(cart)
 
   return (
     <div className='flex flex-col p-2'>
