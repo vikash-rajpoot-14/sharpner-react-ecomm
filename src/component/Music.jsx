@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Card from './Card.jsx'
 import { Context } from '../App.jsx'
 
@@ -25,13 +25,20 @@ const productsArr = [
     imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
     }
     ]
-
 function Music() {
   const context = useContext(Context)
 
   const handletoggle = ()=>{
     context.setTogglecart(!context.togglecart)
   }
+  useEffect(()=>{
+    async function fetchresult(){
+      const res = await fetch('https://swapi.dve/api/films/')
+      const result = await res.json()
+      console.log(result)
+    }
+    fetchresult()
+  },[])
 
   return (
     <div className='w-fit m-auto '>
