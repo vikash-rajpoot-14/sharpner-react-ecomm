@@ -1,0 +1,25 @@
+#loader {
+    border: 3px solid rgb(56, 56, 200);
+    display: inline-block;
+    border-top-color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: loader 1s linear infinite;
+}
+
+@keyframes loader {
+    0%{
+        transform: rotate(0deg);
+    }
+   100% {
+      transform: rotate(360deg);
+    }
+}
+
+.parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+}
