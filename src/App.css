@@ -27,3 +27,36 @@ button:active {
   background-color: #460897;
   border-color: #460897;
 }
+form{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;  
+}
+
+.input {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: start;
+}
+.input > label{
+  font-weight: 550;
+  text-transform: capitalize;
+  margin: 3px;
+}
+.input> input {
+  border-radius: 20px;
+  width: 100%;
+  font-size: large;
+  padding: 4px 8px;
+}
+
+.input > textarea{
+  border-radius: 20px;
+  font-size:large;
+  font-weight: 500;
+  border:2px solid rgb(70, 69, 69);
+  width: 100%;
+  padding: 4px 8px;
+}
