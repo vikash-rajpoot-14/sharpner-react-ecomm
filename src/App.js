@@ -1,61 +1,70 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
-import Loader from './components/Loader';
+export let Context = createContext(null)
 
 function App() {
-  const [dummyMovies, setDummyMovies] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [retry, setRetry] = useState(true)
+  // const [retry, setRetry] = useState(true)
   const [formdata, setFormData] = useState({})
+  const [movies, setMovies] = useState([])
 
-  console.log("dummyMovies",dummyMovies)
 
-  async function fetchresult() {
-    try {
-      setLoading(true)
-      setError(null)
-      const res = await fetch('https://swapi.dev/api/films/')
-      const result = await res.json()
-      setDummyMovies(result.results)
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      setError(error.message)
-      retryApi()
-    }
-  }
-  const retryApi = () => {
-    setInterval(() => {
-      fetchresult()
-    }, 5000)
-  }
 
   useEffect(() => {
-    if (retry) {
-      fetchresult()
-    }
-  }, [retry])
+    async function fetchMovies() {
+      setLoading(true)
+      try {
 
-  const cancelRetry = () => {
-    setRetry(false)
-  }
+        const res = await fetch("https://movies-5dbce-default-rtdb.firebaseio.com/movies.json")
+        const data = await res.json()
+        setLoading(false)
+        for(let key in data) {
+          movies.push({
+           id: key,
+           title: data[key].title,
+           openingText: data[key].openingText,
+           releaseDate: data[key].releaseDate
+          })
+        }
+     setMovies(movies)
+      } catch (error) {
+        setError(error.message)
+        console.log("error", error)
+      }
+    }
+    fetchMovies()
+  }, [])
+
 
   const handleChange = (e) => {
-    setFormData((prev)=>({
-      ...prev,[e.target.id]:e.target.value
+    setFormData((prev) => ({
+      ...prev, [e.target.id]: e.target.value
     }))
   }
 
-  const handleSubmit = (e) => {
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(formdata);
-    console.log(dummyMovies)
-    setDummyMovies((prev)=> [...prev,formdata])
+    try {
+      setLoading(true)
+      const res = await fetch("https://movies-5dbce-default-rtdb.firebaseio.com/movies.json", {
+        method: "Post",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formdata),
+      })
+      const data = await res.json()
+      setLoading(false)
+      console.log("data", data)
+    } catch (error) {
+      console.log("error", error)
+    }
+
   }
-  
+
   return (
     <React.Fragment>
       <section>
@@ -73,7 +82,7 @@ function App() {
             <input onChange={handleChange} id='releaseDate' type='text' />
           </div>
           <div>
-            <button type='submit'>Add Movie</button>
+            <button type='submit'>{loading ? "Uploading" : "Add Movie"}</button>
           </div>
         </form>
       </section>
@@ -81,9 +90,11 @@ function App() {
         <button>Fetch Movies</button>
       </section>
       <section>
-        {/* <MoviesList loading={loading} movies={dummyMovies} /> */}
+        <Context.Provider value={{loading,setLoading}}>
+        <MoviesList loading={loading} movies={movies} />
         {!loading && error && "Something went wrong ! ...Retrying"}
-        {retry && loading && <button onClick={cancelRetry} >Cancel Retry</button>}
+        {/* {retry && loading && <button >Cancel Retry</button>} */}
+        </Context.Provider>
       </section>
     </React.Fragment>
   );

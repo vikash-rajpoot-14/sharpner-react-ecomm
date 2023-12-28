@@ -19,3 +19,25 @@
   font-size: 1rem;
 }
 
+.movie button {
+  font: inherit;
+  cursor: pointer;
+  background: #bf0c0c;
+  border: 1px solid #bf0c0c;
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 20px;
+}
+
+
+.movie button:focus {
+  outline: none;
+}
+
+
+.movie button:hover,
+
+.movie button:active {
+  background-color: #ba2d2d;
+  border-color: #ba2d2d;
+}
