@@ -6,6 +6,7 @@ import Footer from './component/Footer'
 import Cart from './component/Cart'
 import Home from './pages/Home'
 import Store from './pages/Store'
+import Contact from './component/Contact'
 export const Context = createContext({})
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
                 <Route path='/' element={<Home />} />
                 <Route path='/about' element={<About />} />
                 <Route path='/store' element={<Store />} />
-
+                <Route path='/contact-us' element={<Contact/>} />
               </Routes>
           <Footer />
         </div>

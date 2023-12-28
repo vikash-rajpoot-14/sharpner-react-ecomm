@@ -1,38 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import Card from './Card.jsx'
 import { Context } from '../App.jsx'
 import Loader from './Loader.jsx'
 
-// const productsArr = [
-//   {
-//     title: 'Colors',
-//     price: 100,
-//     imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-//   },
-//   {
-//     title: 'Black and white Colors',
-//     price: 50,
-//     imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-//   },
-//   {
-//     title: 'Yellow and Black Colors',
-//     price: 70,
-//     imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
-//   },
-//   {
-//     title: 'Blue Color',
-//     price: 100,
-//     imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
-//   }
-// ]
-// const fetcher = async () => {
-//   const response = await fetch('https://swapi.dev/api/films/')
-//   const data = await response.json()
-//   return data.results
-// }
 
 function Music() {
-  // const { data, error } = useSWR('movies', fetcher)
   const context = useContext(Context)
   const [loading, setLoading] = useState(false)
   const [movies, setMovies] = useState([])
@@ -42,8 +14,7 @@ function Music() {
   const handletoggle = () => {
     context.setTogglecart(!context.togglecart)
   }
-
-  async function fetchresult() {
+  const fetchresult = useCallback(async ()=> {
     try {
       setLoading(true)
       setError(null)
@@ -56,8 +27,8 @@ function Music() {
       setError(error.message)
       setLoading(false)
       retryApi()
-    }
-  }
+    }},[loading,movies,error])
+
   const retryApi = () => {
     setRetry(true)
     setInterval(() => {
@@ -73,6 +44,7 @@ function Music() {
 
   const cancelRetry = () => {
     setRetry(false)
+    setLoading(false)
   }
 
   return (
@@ -81,7 +53,7 @@ function Music() {
         <p className='text-6xl mb-16 font-serif'>Music</p>
       </div>
       {!loading &&
-        <ul className='grid  gap-40 grid-cols-1 xl:grid-cols-2 '>
+        <ul className='grid m-16  gap-10 grid-cols-1 xl:grid-cols-2 '>
           {movies?.map((el, index) => <Card key={index} data={el} />)}
         </ul>
       }
