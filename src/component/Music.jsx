@@ -14,13 +14,15 @@ function Music() {
   const handletoggle = () => {
     context.setTogglecart(!context.togglecart)
   }
+
   const fetchresult = useCallback(async ()=> {
     try {
       setLoading(true)
       setError(null)
-      const res = await fetch('https://swapi.dev/api/films/')
+      const res = await fetch('https://fakestoreapi.com/products')
       const result = await res.json()
-      setMovies(result.results)
+      console.log("object",result)
+      setMovies(result)
       setLoading(false)
     } catch (error) {
       setLoading(true)
@@ -54,7 +56,7 @@ function Music() {
       </div>
       {!loading &&
         <ul className='grid m-16  gap-10 grid-cols-1 xl:grid-cols-2 '>
-          {movies?.map((el, index) => <Card key={index} data={el} />)}
+          {movies?.map((el, index) => <Card key={el.id} data={el} />)}
         </ul>
       }
       <div className='mb-8 flex flex-col items-center justify-center'>
