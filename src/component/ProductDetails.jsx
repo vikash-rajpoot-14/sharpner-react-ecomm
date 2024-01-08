@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Loader from './Loader';
 import { Context } from '../App';
+import { AuthContext } from '../store/Context';
 
 function ProductDetails() {
     const {cart,setCart} = useContext(Context)
     const [product, setProduct] = useState(null);
     const { id } = useParams();
-    console.log(cart)
+    const authCtx = useContext(AuthContext);
+    // console.log(cart)
+    console.log(authCtx)
 
     useEffect(() => {
         async function movieDetails() {
@@ -21,11 +24,17 @@ function ProductDetails() {
         }
         movieDetails();
     }, [id])
-    const handleCart = (prod)=>{
-     setCart((cart)=>{
-        return [...cart, prod]
-     })
-
+    
+    const handleCart = async (prod)=>{
+        console.log("email",authCtx.email)
+        const userid = authCtx.email.split("@")[0]
+      const res = await fetch(`https://crudcrud.com/api/6952af5869db4285a6b837c98236f2b0/${userid}`,{
+        method: 'POST',
+        headers : { 'Content-Type': 'application/json' },
+        body : JSON.stringify(prod)
+      })
+      const data = await res.json();
+      console.log("details: " , data)
     }
 
     return (

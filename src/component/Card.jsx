@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom'
 
 function Card({ data }) {
   const navigate = useNavigate();
-  // console.log("data",data)
   const context = useContext(Context)
   const handleDetails = ()=>{
       navigate(`/store/${data.id}`)

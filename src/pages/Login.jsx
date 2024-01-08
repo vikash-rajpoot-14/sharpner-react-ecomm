@@ -11,7 +11,7 @@ const AuthForm = () => {
   const navigate = useNavigate()
   const emailRef = useRef();
   const passwordRef = useRef();
-  
+
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
@@ -47,7 +47,8 @@ const AuthForm = () => {
           }
         })
         .then((data) => {
-          // console.log("login",data)
+          console.log("login",data)
+          context.AddEmail(data.email)
           context.Login(data.idToken);
           setLoading(false);
           navigate("/store");
@@ -85,7 +86,7 @@ const AuthForm = () => {
           }
         })
         .then((data) => {
-          // console.log("signup", data);
+          context.AddEmail(data.email)
           context.Login(data.idToken);
           setLoading(false);
           navigate("/store");

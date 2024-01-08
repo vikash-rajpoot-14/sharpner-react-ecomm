@@ -12,8 +12,8 @@ function Header() {
   const LogoutHandler = (e)=>{
     e.preventDefault();
     authCtx.Logout();
+    authCtx.RemoveEmail();
     navigate("/auth")
-
   }
 
   const handletoggle = () => {
