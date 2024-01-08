@@ -28,12 +28,14 @@ function Header() {
           <NavLink to="/" className="p-3 hover:underline   text-lg sm:text-xl">
             Home
           </NavLink>
+          {authCtx.isLoggedIn && 
           <NavLink
-            to="/store"
-            className="p-3  hover:underline  text-lg sm:text-xl"
+          to="/store"
+          className="p-3  hover:underline  text-lg sm:text-xl"
           >
             Store
           </NavLink>
+          }
           <NavLink
             to="/about"
             className="p-3  hover:underline  text-lg sm:text-xl"

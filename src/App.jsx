@@ -7,9 +7,9 @@ import Cart from './component/Cart'
 import Home from './pages/Home'
 import Store from './pages/Store'
 import Contact from './component/Contact'
-// import PrivateRoutes from './component/PrivateRoutes'
 import ProductDetails from './component/ProductDetails'
 import Login from './pages/Login'
+import PrivateRoutes from './component/PrivateRoutes'
 export const Context = createContext({})
 
 function App() {
@@ -32,10 +32,10 @@ function App() {
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/about' element={<About />} />
-              {/* <Route element={<PrivateRoutes />}> */}
+              <Route element={<PrivateRoutes />}>
                 <Route path='/store' element={<Store />} />
                 <Route path='/store/:id' element={<ProductDetails />} />
-              {/* </Route> */}
+              </Route>
               <Route path='/auth' element={<Login />} />
               <Route path='/contact-us' element={<Contact />} />
             </Routes>
