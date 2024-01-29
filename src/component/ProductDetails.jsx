@@ -5,12 +5,12 @@ import { Context } from '../App';
 import { AuthContext } from '../store/Context';
 
 function ProductDetails() {
-    const {cart,setCart} = useContext(Context)
+    const { cart, setCart } = useContext(Context)
+    const [loading, setLoading] = useState(false)
     const [product, setProduct] = useState(null);
     const { id } = useParams();
     const authCtx = useContext(AuthContext);
-    // console.log(cart)
-    console.log(authCtx)
+    console.log("cart", cart)
 
     useEffect(() => {
         async function movieDetails() {
@@ -24,17 +24,20 @@ function ProductDetails() {
         }
         movieDetails();
     }, [id])
-    
-    const handleCart = async (prod)=>{
-        console.log("email",authCtx.email)
+
+    const handleCart = async (prod) => {
+        setLoading(true)
+        // console.log("email",authCtx.email)
         const userid = authCtx.email.split("@")[0]
-      const res = await fetch(`https://crudcrud.com/api/6952af5869db4285a6b837c98236f2b0/${userid}`,{
-        method: 'POST',
-        headers : { 'Content-Type': 'application/json' },
-        body : JSON.stringify(prod)
-      })
-      const data = await res.json();
-      console.log("details: " , data)
+        const res = await fetch(`https://crudcrud.com/api/dfdf793840ab471cac09cc20c4c78147/${userid}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(prod)
+        })
+        const data = await res.json();
+        console.log("post",data)
+        setLoading(false)
+        setCart([...cart, data])
     }
 
     return (
@@ -63,7 +66,7 @@ function ProductDetails() {
                         </div >
                     </div>
                     <div className='flex justify-center'>
-                        <button onClick={()=>handleCart(product)} className='bg-sky-500 p-2 rounded text-white'>Add to Cart</button>
+                        <button onClick={() => handleCart(product)} className='bg-sky-500 p-2 w-28 rounded text-white'>{loading ? "Adding..." : "Add to Cart"}</button>
                     </div>
                 </div>)}
         </div>

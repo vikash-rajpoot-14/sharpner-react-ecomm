@@ -14,14 +14,9 @@ export const Context = createContext({})
 
 function App() {
 
-  if (JSON.parse(localStorage.getItem('cart')) == undefined) {
-    // console.log("cjsncjsnc")
-    localStorage.setItem('cart', JSON.stringify([]))
-  }
-  let localcart = JSON.parse(localStorage.getItem('cart'))
-  const [cart, setCart] = useState(localcart);
+  const [cart, setCart] = useState([]);
   const [togglecart, setTogglecart] = useState(false)
-  localStorage.setItem('cart', JSON.stringify(cart))
+  // localStorage.setItem('cart', JSON.stringify(cart))
 
   return (
     <BrowserRouter>

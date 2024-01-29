@@ -4,14 +4,13 @@ import { AuthContext } from "../store/Context.jsx";
 
 function Cart() {
   const context = useContext(Context);
-  const [cart, setCart] = useState([]);
   const authCtx = useContext(AuthContext);
+  const [cart ,setCart] = useState([])
+
   const handletoggle = () => {
     context.setTogglecart(!context.togglecart);
   };
-
-
-  // console.log(cart)
+ 
   let finalCart = [];
   
   for(let prod of cart){
@@ -26,12 +25,11 @@ function Cart() {
 
   useEffect(() => {
     async function fetchdata() {
-      const userid = authCtx.email.split("@")[0];
+      const userid = authCtx.email?.split("@")[0];
       const res = await fetch(
-        `https://crudcrud.com/api/6952af5869db4285a6b837c98236f2b0/${userid}`);
+        `https://crudcrud.com/api/dfdf793840ab471cac09cc20c4c78147/${userid}`);
       const data = await res.json();
-      console.log("object",data)
-      setCart(data)
+       setCart(data)
     }
     fetchdata();
   }, [authCtx.email]);
@@ -53,7 +51,7 @@ function Cart() {
         <li className="p-4  underline  underline-offset-4">Quauntity</li>
       </ul>
       <ul>
-        {finalCart.map((product, idx) => (
+        {finalCart?.map((product, idx) => (
           <li className="flex p-2" key={product._id}>
             <p className="w-16">{product.title}</p>
             <p className="px-4">{product.price}</p>

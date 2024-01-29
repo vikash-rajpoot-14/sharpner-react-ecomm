@@ -10,6 +10,7 @@ function Card({ data }) {
   const handleDetails = ()=>{
       navigate(`/store/${data.id}`)
   }
+  
   return (
     <div className='w-72 overflow-hidden flex items-center flex-col justify-center h-fit border-2 border-gray-500 p-3 m-3 rounded-sm'>
       <div className='p-2 mb-2 text-lg font-semibold flex justify-center italic '>{data.title}</div>
