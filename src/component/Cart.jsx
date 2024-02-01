@@ -5,31 +5,19 @@ import { AuthContext } from "../store/Context.jsx";
 function Cart() {
   const context = useContext(Context);
   const authCtx = useContext(AuthContext);
-  const [cart ,setCart] = useState([])
 
   const handletoggle = () => {
     context.setTogglecart(!context.togglecart);
   };
  
-  let finalCart = [];
-  
-  for(let prod of cart){
-    for(let i=0;i<finalCart.length;i++){
-      if(finalCart[i].id === prod.id){
-        finalCart[i] = {...finalCart[i], quantity:finalCart[i].quantity + 1 }
-      }else{
-        finalCart.push({...prod,quantity : 1})
-      }
-    }
-  }
-
   useEffect(() => {
     async function fetchdata() {
       const userid = authCtx.email?.split("@")[0];
       const res = await fetch(
-        `https://crudcrud.com/api/dfdf793840ab471cac09cc20c4c78147/${userid}`);
+        `https://crudcrud.com/api/8ad9518804a44ccc94e0e45665191533/${userid}`);
       const data = await res.json();
-       setCart(data)
+      console.log("cart",data)
+      context.setCart(data)
     }
     fetchdata();
   }, [authCtx.email]);
@@ -51,7 +39,7 @@ function Cart() {
         <li className="p-4  underline  underline-offset-4">Quauntity</li>
       </ul>
       <ul>
-        {finalCart?.map((product, idx) => (
+        {context.cart?.map((product, idx) => (
           <li className="flex p-2" key={product._id}>
             <p className="w-16">{product.title}</p>
             <p className="px-4">{product.price}</p>

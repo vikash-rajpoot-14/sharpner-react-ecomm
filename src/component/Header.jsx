@@ -6,7 +6,7 @@ import { AuthContext } from "../store/Context.jsx";
 function Header() {
   const authCtx = useContext(AuthContext);
   const context = useContext(Context);
-  const totalQuantity = context.cart.length;
+  const totalQuantity = context.cart?.reduce((acc,cv)=>acc+cv.quantity ,0);
   const navigate = useNavigate();
 
   const LogoutHandler = (e)=>{

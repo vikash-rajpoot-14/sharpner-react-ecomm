@@ -29,15 +29,28 @@ function ProductDetails() {
         setLoading(true)
         // console.log("email",authCtx.email)
         const userid = authCtx.email.split("@")[0]
-        const res = await fetch(`https://crudcrud.com/api/dfdf793840ab471cac09cc20c4c78147/${userid}`, {
+        const res = await fetch(`https://crudcrud.com/api/8ad9518804a44ccc94e0e45665191533/${userid}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(prod)
         })
         const data = await res.json();
-        console.log("post",data)
         setLoading(false)
-        setCart([...cart, data])
+        setCart((prev)=>{
+            data.quantity = 1;
+            let flag = false;
+            prev.forEach(item => {
+                if (item.id === prod.id) {
+                    flag = true;
+                    item.quantity += 1;
+                }
+            })
+            if (!flag) {
+                return [...prev, data]
+            }else{
+                 return [...prev]
+            }
+        })
     }
 
     return (
